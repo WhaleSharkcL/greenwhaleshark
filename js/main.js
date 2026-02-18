@@ -17,20 +17,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    bookingForm.addEventListener('submit', function(e) {
+    bookingForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
+        const submitBtn = bookingForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
         const formData = new FormData(bookingForm);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
 
-        console.log('Form submitted:', data);
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
 
-        modal.classList.add('active');
+            const result = await response.json();
 
-        bookingForm.reset();
+            if (result.success) {
+                modal.classList.add('active');
+                bookingForm.reset();
+            } else {
+                alert('Something went wrong. Please try again or call us directly.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again or call us directly.');
+        }
+
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     });
 
     modalClose.addEventListener('click', function() {

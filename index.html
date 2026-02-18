@@ -172,7 +172,10 @@
                 <h2>Schedule a Pickup</h2>
                 <p>Fill out the form below and we'll contact you to confirm</p>
             </div>
-            <form id="booking-form" class="booking-form">
+            <form id="booking-form" class="booking-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="3d0b291e-3e13-4243-afe2-fec821b2ce99">
+                <input type="hidden" name="subject" value="New Pickup Request - Green Whale Shark">
+                <input type="hidden" name="from_name" value="Green Whale Shark Website">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
